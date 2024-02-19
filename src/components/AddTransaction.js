@@ -1,19 +1,28 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useContext } from 'react';
+import { globalContext } from '../context/store';
 
 export const AddTransaction = () => {
   const [text, setText] = useState('');
   const [amount, setAmount] = useState(0);
+  const { addTransaction } = useContext(globalContext);
 
   const inputChangeHandler = ({ target: { id, value } }) => {
-    if (id === 'text') {
+    if (id === 'text' && !value.split('').some((char) => Number(char))) {
       setText(value);
-    } else {
+    }
+
+    if (id === 'amount') {
       setAmount(value);
     }
   };
 
   const submitHandler = (event) => {
     event.preventDefault();
+
+    addTransaction(text, +amount);
+
+    setText('');
+    setAmount(0);
   };
 
   return (

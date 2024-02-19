@@ -19,7 +19,9 @@ export const AddTransaction = () => {
   const submitHandler = (event) => {
     event.preventDefault();
 
-    addTransaction(text, +amount);
+    if (text) {
+      addTransaction(text, +amount);
+    }
 
     setText('');
     setAmount(0);
